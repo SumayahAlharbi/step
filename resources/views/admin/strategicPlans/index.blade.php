@@ -1,21 +1,27 @@
 @extends('layouts.admin')
 @section('content')
-@can('strategic_plan_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.strategic-plans.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.strategicPlan.title_singular') }}
-            </a>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                {{ trans('global.app_csvImport') }}
-            </button>
-            @include('csvImport.modal', ['model' => 'StrategicPlan', 'route' => 'admin.strategic-plans.parseCsvImport'])
-        </div>
-    </div>
-@endcan
+<h5> {{ trans('cruds.strategicPlan.title_singular') }} {{ trans('global.list') }} </h5>
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.strategicPlan.title_singular') }} {{ trans('global.list') }}
+      @can('strategic_plan_create')
+          <div style="margin-bottom: 10px;" class="row">
+              <div class="col-lg-12">
+                  <a class="btn btn-success" href="{{ route('admin.strategic-plans.create') }}">
+                      {{ trans('global.add') }} {{ trans('cruds.strategicPlan.title_singular') }}
+                  </a>
+                  <button class="btn btn-info" data-toggle="modal" data-target="#csvImportModal">
+                      {{ trans('global.app_csvImport') }}
+                  </button>
+                  @include('csvImport.modal', ['model' => 'StrategicPlan', 'route' => 'admin.strategic-plans.parseCsvImport'])
+
+                  <a class="btn btn-warning" href="{{ route('admin.strategic-plans.archiveList') }}">
+                      {{ trans('global.archive') }}
+                  </a>
+
+              </div>
+          </div>
+      @endcan
+
     </div>
 
     <div class="card-body">
@@ -100,7 +106,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

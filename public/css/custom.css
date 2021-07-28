@@ -61,6 +61,12 @@ table.dataTable thead th {
     color: white;
 }
 
+.btn-warning,
+.btn-warning:hover,
+.badge-warning {
+    color: white;
+}
+
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_desc {

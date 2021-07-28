@@ -1,7 +1,7 @@
 @can('action_plan_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.action-plans.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.action-plans.create', ['id'=>$initiative->id]) }}">
                 {{ trans('global.add') }} {{ trans('cruds.actionPlan.title_singular') }}
             </a>
         </div>
@@ -146,7 +146,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

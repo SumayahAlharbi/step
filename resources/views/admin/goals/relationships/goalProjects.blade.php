@@ -1,7 +1,7 @@
 @can('project_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.projects.create') }}">
+            <a class="btn btn-success" href="{{ route('admin.projects.create', ['id'=>$goal->id]) }}">
                 {{ trans('global.add') }} {{ trans('cruds.project.title_singular') }}
             </a>
         </div>
@@ -134,7 +134,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

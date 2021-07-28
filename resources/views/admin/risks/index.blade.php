@@ -1,21 +1,21 @@
 @extends('layouts.admin')
 @section('content')
-@can('risk_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.risks.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.risk.title_singular') }}
-            </a>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                {{ trans('global.app_csvImport') }}
-            </button>
-            @include('csvImport.modal', ['model' => 'Risk', 'route' => 'admin.risks.parseCsvImport'])
-        </div>
-    </div>
-@endcan
+<h5> {{ trans('cruds.risk.title_singular') }} {{ trans('global.list') }}</h5>
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.risk.title_singular') }} {{ trans('global.list') }}
+      @can('risk_create')
+          <div style="margin-bottom: 10px;" class="row">
+              <div class="col-lg-12">
+                  <a class="btn btn-success" href="{{ route('admin.risks.create') }}">
+                      {{ trans('global.add') }} {{ trans('cruds.risk.title_singular') }}
+                  </a>
+                  <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                      {{ trans('global.app_csvImport') }}
+                  </button>
+                  @include('csvImport.modal', ['model' => 'Risk', 'route' => 'admin.risks.parseCsvImport'])
+              </div>
+          </div>
+      @endcan
     </div>
 
     <div class="card-body">
@@ -120,7 +120,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 });
 
 </script>

@@ -9,6 +9,8 @@ return [
     'create'                               => 'Create',
     'dashboard'                            => 'Dashboard',
     'delete'                               => 'Delete',
+    'archive'                              => 'Archive',
+    'restore'                              => 'Restore',
     'downloadFile'                         => 'Download file',
     'edit'                                 => 'Edit',
     'emailVerificationSuccess'             => 'User email verified successfully',

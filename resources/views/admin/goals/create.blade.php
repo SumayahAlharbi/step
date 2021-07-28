@@ -51,7 +51,11 @@
                 <label for="strategic_plan_id">{{ trans('cruds.goal.fields.strategic_plan') }}</label>
                 <select class="form-control select2 {{ $errors->has('strategic_plan') ? 'is-invalid' : '' }}" name="strategic_plan_id" id="strategic_plan_id">
                     @foreach($strategic_plans as $id => $strategic_plan)
-                        <option value="{{ $id }}" {{ old('strategic_plan_id') == $id ? 'selected' : '' }}>{{ $strategic_plan }}</option>
+                    @if (request()->get('id') == $id)
+                                  <option value="{{ $id }}" selected>{{ $strategic_plan }}</option>
+                            @else
+                                  <option value="{{ $id }}">{{ $strategic_plan }}</option>
+                            @endif
                     @endforeach
                 </select>
                 @if($errors->has('strategic_plan'))

@@ -33,7 +33,11 @@
                 <label class="required" for="project_id">{{ trans('cruds.initiative.fields.project') }}</label>
                 <select class="form-control select2 {{ $errors->has('project') ? 'is-invalid' : '' }}" name="project_id" id="project_id" required>
                     @foreach($projects as $id => $project)
-                        <option value="{{ $id }}" {{ old('project_id') == $id ? 'selected' : '' }}>{{ $project }}</option>
+                        @if (request()->get('id') == $id)
+                                      <option value="{{ $id }}" selected>{{ $project }}</option>
+                                @else
+                                      <option value="{{ $id }}">{{ $project }}</option>
+                                @endif
                     @endforeach
                 </select>
                 @if($errors->has('project'))

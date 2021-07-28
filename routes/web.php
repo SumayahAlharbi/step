@@ -34,6 +34,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Strategic Plans
     Route::delete('strategic-plans/destroy', 'StrategicPlansController@massDestroy')->name('strategic-plans.massDestroy');
+    Route::get('strategic-plans/archive/{strategic_plan}', 'StrategicPlansController@archive')->name('strategic-plans.archive');
+    Route::get('strategic-plans/restore', 'StrategicPlansController@archiveList')->name('strategic-plans.archiveList');
+    Route::get('strategic-plans/restore/{strategic_plan}', 'StrategicPlansController@restore')->name('strategic-plans.restore');
     Route::post('strategic-plans/media', 'StrategicPlansController@storeMedia')->name('strategic-plans.storeMedia');
     Route::post('strategic-plans/ckmedia', 'StrategicPlansController@storeCKEditorImages')->name('strategic-plans.storeCKEditorImages');
     Route::post('strategic-plans/parse-csv-import', 'StrategicPlansController@parseCsvImport')->name('strategic-plans.parseCsvImport');
