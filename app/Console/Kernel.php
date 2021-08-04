@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\ActionPlan;
+use Carbon\Carbon;
+use App\Jobs\actionPlanReminderJob;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +27,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $today = Carbon::now()->toDateString();
+        $action_plan_id = ActionPlan::whereDate('end','=',$today)
+        ->where(function ($q) {
+              $q->where('approval','=','Draft')
+              ->orwhere('approval', '=', '')
+              ->orWhereNull('approval')
+              ->select('id');
+          })->get();
+          if (count($action_plan_id)){
+            $action_plan = ActionPlan::findOrFail($action_plan_id->first->id->id);
+            //actionPlanReminderJob::dispatch($action_plan);
+            $schedule->job(new actionPlanReminderJob($action_plan))->dailyAt('10:33');
+          }
     }
 
     /**

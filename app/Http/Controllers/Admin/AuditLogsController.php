@@ -24,14 +24,14 @@ class AuditLogsController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'audit_log_show';
-                $editGate      = 'audit_log_edit';
-                $deleteGate    = 'audit_log_delete';
+                //$editGate      = 'audit_log_edit';
+                //$deleteGate    = 'audit_log_delete';
                 $crudRoutePart = 'audit-logs';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
-                    'editGate',
-                    'deleteGate',
+                    //'editGate',
+                    //'deleteGate',
                     'crudRoutePart',
                     'row'
                 ));

@@ -54,14 +54,8 @@ class GoalsController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
-            $table->editColumn('user', function ($row) {
-                $labels = [];
-
-                foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->name);
-                }
-
-                return implode(' ', $labels);
+            $table->editColumn('description', function ($row) {
+                return strip_tags(htmlspecialchars_decode($row->description));
             });
             $table->addColumn('strategic_plan_name', function ($row) {
                 return $row->strategic_plan ? $row->strategic_plan->name : '';

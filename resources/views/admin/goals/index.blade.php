@@ -32,7 +32,7 @@
                         {{ trans('cruds.goal.fields.title') }}
                     </th>
                     <th>
-                        {{ trans('cruds.goal.fields.user') }}
+                        {{ trans('cruds.goal.fields.description') }}
                     </th>
                     <th>
                         {{ trans('cruds.goal.fields.strategic_plan') }}
@@ -98,7 +98,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'title', name: 'title' },
-{ data: 'user', name: 'users.name' },
+{ data: 'description', name: 'description'},
 { data: 'strategic_plan_name', name: 'strategic_plan.name' },
 { data: 'team_name', name: 'team.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
