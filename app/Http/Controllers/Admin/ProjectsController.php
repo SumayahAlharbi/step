@@ -53,20 +53,13 @@ class ProjectsController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
+            $table->addColumn('description', function ($row) {
+                return strip_tags(htmlspecialchars_decode($row->description));
+            });
             $table->addColumn('goal_title', function ($row) {
                 return $row->goal ? $row->goal->title : '';
             });
-
-            $table->editColumn('user', function ($row) {
-                $labels = [];
-
-                foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
+            
             $table->rawColumns(['actions', 'placeholder', 'goal', 'user']);
 
             return $table->make(true);

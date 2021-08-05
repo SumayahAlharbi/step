@@ -32,10 +32,10 @@
                         {{ trans('cruds.project.fields.title') }}
                     </th>
                     <th>
-                        {{ trans('cruds.project.fields.goal') }}
+                        {{ trans('cruds.project.fields.description') }}
                     </th>
                     <th>
-                        {{ trans('cruds.project.fields.user') }}
+                        {{ trans('cruds.project.fields.goal') }}
                     </th>
                     <th>
                         &nbsp;
@@ -95,8 +95,8 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'title', name: 'title' },
+{ data: 'description', name: 'description' },
 { data: 'goal_title', name: 'goal.title' },
-{ data: 'user', name: 'users.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
