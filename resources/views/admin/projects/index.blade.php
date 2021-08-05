@@ -32,7 +32,7 @@
                         {{ trans('cruds.project.fields.title') }}
                     </th>
                     <th>
-                        {{ trans('cruds.goal.fields.description') }}
+                        {{ trans('cruds.project.fields.description') }}
                     </th>
                     <th>
                         {{ trans('cruds.project.fields.goal') }}
