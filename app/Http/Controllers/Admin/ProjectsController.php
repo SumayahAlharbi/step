@@ -56,10 +56,10 @@ class ProjectsController extends Controller
             $table->addColumn('description', function ($row) {
                 return strip_tags(htmlspecialchars_decode($row->description));
             });
-            $table->addColumn('goal_title', function ($row) {
-                return $row->goal ? $row->goal->title : '';
+            $table->addColumn('goal_id', function ($row) {
+                return $row->goal ? $row->goal->id : '';
             });
-            
+
             $table->rawColumns(['actions', 'placeholder', 'goal', 'user']);
 
             return $table->make(true);
