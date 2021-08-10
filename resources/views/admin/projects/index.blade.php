@@ -96,7 +96,11 @@
 { data: 'id', name: 'id' },
 { data: 'title', name: 'title' },
 { data: 'description', name: 'description' },
-{ data: 'goal_title', name: 'goal.title' },
+{ data: 'goal', name: 'goal_id' ,
+render: function ( data, type, row) {
+      return '<a href="/admin/goals/'+data.id+'">'+data.title+'</a>';
+    }
+},
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
