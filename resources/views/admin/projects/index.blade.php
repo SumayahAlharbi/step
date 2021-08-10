@@ -101,7 +101,6 @@ render: function ( data, type, row) {
       return '<a href="/admin/goals/'+data.id+'">'+data.title+'</a>';
     }
 },
-//return '<a href="/admin/goals/"'+data+'>'+data+'</a>';
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
