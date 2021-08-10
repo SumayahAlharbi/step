@@ -10,7 +10,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.project.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.project.title_singular') }} {{ trans('global.list') }} Under {{$goal->title}}
     </div>
 
     <div class="card-body">
@@ -30,9 +30,9 @@
                         <th>
                             {{ trans('cruds.project.fields.description') }}
                         </th>
-                        <th>
+                        <!--<th>
                             {{ trans('cruds.project.fields.goal') }}
-                        </th>
+                        </th>-->
                         <th>
                             &nbsp;
                         </th>
@@ -53,9 +53,9 @@
                             <td>
                                 {!! $project->description ?? '' !!}
                             </td>
-                            <td>
+                            <!--<td>
                                 <a href="/admin/goals/{{$project->goal->id}}">{{$project->goal->title}}</a>
-                            </td>
+                            </td>-->
                             <td>
                                 @can('project_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.projects.show', $project->id) }}">

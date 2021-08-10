@@ -44,7 +44,7 @@
                             {{ trans('cruds.project.fields.goal') }}
                         </th>
                         <td>
-                            {{ $project->goal->title ?? '' }}
+                            <a href="/admin/goals/{{$project->goal->id}}">{{$project->goal->title}}</a>
                         </td>
                     </tr>
                     <tr>
