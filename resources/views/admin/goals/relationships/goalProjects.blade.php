@@ -28,10 +28,10 @@
                             {{ trans('cruds.project.fields.title') }}
                         </th>
                         <th>
-                            {{ trans('cruds.project.fields.goal') }}
+                            {{ trans('cruds.project.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.project.fields.user') }}
+                            {{ trans('cruds.project.fields.goal') }}
                         </th>
                         <th>
                             &nbsp;
@@ -51,12 +51,10 @@
                                 {{ $project->title ?? '' }}
                             </td>
                             <td>
-                                {{ $project->goal->title ?? '' }}
+                                {!! $project->description ?? '' !!}
                             </td>
                             <td>
-                                @foreach($project->users as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
-                                @endforeach
+                                <a href="/admin/goals/{{$project->goal->id}}">{{$project->goal->title}}</a>
                             </td>
                             <td>
                                 @can('project_show')
