@@ -147,6 +147,7 @@
                             @endforeach
                         </td>
                     </tr>
+                    @can('audit_log_access')
                     <tr>
                         <th>
                             {{ trans('cruds.initiative.fields.user') }}
@@ -157,6 +158,7 @@
                             @endforeach
                         </td>
                     </tr>
+                    @endcan
                     <tr>
                         <th>
                             {{ trans('cruds.initiative.fields.updated_at') }}
