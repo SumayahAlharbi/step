@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        // find or create the admin role
+        // find or create the admin user
         User::firstOrCreate(['email' => 'admin@admin.com'],['name' => 'Admin','password' => bcrypt('password'),'remember_token' => null]);
 
         if (App::environment('production')) {
