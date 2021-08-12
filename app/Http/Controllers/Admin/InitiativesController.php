@@ -53,8 +53,11 @@ class InitiativesController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
-            $table->addColumn('project_title', function ($row) {
-                return $row->project ? $row->project->title : '';
+            $table->addColumn('description', function ($row) {
+                return strip_tags(htmlspecialchars_decode($row->description));
+            });
+            $table->addColumn('project_id', function ($row) {
+                return $row->project ? $row->project->id : '';
             });
 
             $table->editColumn('status', function ($row) {

@@ -10,6 +10,7 @@
         <form method="POST" action="{{ route("admin.initiatives.update", [$initiative->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+            @can('audit_log_access')
             <div class="form-group">
                 <label class="required" for="title">{{ trans('cruds.initiative.fields.title') }}</label>
                 <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', $initiative->title) }}" required>
@@ -54,6 +55,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_description_helper') }}</span>
             </div>
+            @endcan
             <div class="form-group">
                 <label for="kpi_previous">{{ trans('cruds.initiative.fields.kpi_previous') }}</label>
                 <input class="form-control {{ $errors->has('kpi_previous') ? 'is-invalid' : '' }}" type="text" name="kpi_previous" id="kpi_previous" value="{{ old('kpi_previous', $initiative->kpi_previous) }}">
@@ -94,6 +96,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_current_date_helper') }}</span>
             </div>
+            @can('audit_log_access')
             <div class="form-group">
                 <label for="kpi_target">{{ trans('cruds.initiative.fields.kpi_target') }}</label>
                 <input class="form-control {{ $errors->has('kpi_target') ? 'is-invalid' : '' }}" type="text" name="kpi_target" id="kpi_target" value="{{ old('kpi_target', $initiative->kpi_target) }}">
@@ -114,10 +117,12 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_target_date_helper') }}</span>
             </div>
+            @endcan
             <div class="form-group">
                 <label>{{ trans('cruds.initiative.fields.status') }}</label>
                 <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
                     <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    <option value="Ongoing">Ongoing</option>
                     @foreach(App\Models\Initiative::STATUS_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('status', $initiative->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
@@ -139,6 +144,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.why_if_not_accomplished_helper') }}</span>
             </div>
+            @can('audit_log_access')
             <div class="form-group">
                 <label for="dod_comment">{{ trans('cruds.initiative.fields.dod_comment') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('dod_comment') ? 'is-invalid' : '' }}" name="dod_comment" id="dod_comment">{!! old('dod_comment', $initiative->dod_comment) !!}</textarea>
@@ -149,6 +155,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.dod_comment_helper') }}</span>
             </div>
+            @endcan
             <div class="form-group">
                 <label for="attachments">{{ trans('cruds.initiative.fields.attachments') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('attachments') ? 'is-invalid' : '' }}" id="attachments-dropzone">
@@ -160,6 +167,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.attachments_helper') }}</span>
             </div>
+            @can('audit_log_access')
             <div class="form-group">
                 <label for="users">{{ trans('cruds.initiative.fields.user') }}</label>
                 <div style="padding-bottom: 4px">
@@ -178,6 +186,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.user_helper') }}</span>
             </div>
+            @endcan
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

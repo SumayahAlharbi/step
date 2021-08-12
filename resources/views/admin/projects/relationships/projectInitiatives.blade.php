@@ -10,7 +10,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.initiative.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.initiative.title_singular') }} {{ trans('global.list') }} Under {{$project->title}}
     </div>
 
     <div class="card-body">
@@ -28,8 +28,11 @@
                             {{ trans('cruds.initiative.fields.title') }}
                         </th>
                         <th>
-                            {{ trans('cruds.initiative.fields.project') }}
+                            {{ trans('cruds.initiative.fields.description') }}
                         </th>
+                        <!--<th>
+                            {{ trans('cruds.initiative.fields.project') }}
+                        </th>-->
                         <th>
                             {{ trans('cruds.initiative.fields.status') }}
                         </th>
@@ -57,8 +60,11 @@
                                 {{ $initiative->title ?? '' }}
                             </td>
                             <td>
-                                {{ $initiative->project->title ?? '' }}
+                                {!! $initiative->description ?? '' !!}
                             </td>
+                            <!--<td>
+                                <a href="/admin/goals/{{$initiative->project->id}}">{{$initiative->project->title}}</a>
+                            </td>-->
                             <td>
                                 {{ App\Models\Initiative::STATUS_SELECT[$initiative->status] ?? '' }}
                             </td>

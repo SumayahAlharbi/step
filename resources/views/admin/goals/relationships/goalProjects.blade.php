@@ -10,7 +10,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.project.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.project.title_singular') }} {{ trans('global.list') }} Under {{$goal->title}}
     </div>
 
     <div class="card-body">
@@ -28,11 +28,11 @@
                             {{ trans('cruds.project.fields.title') }}
                         </th>
                         <th>
+                            {{ trans('cruds.project.fields.description') }}
+                        </th>
+                        <!--<th>
                             {{ trans('cruds.project.fields.goal') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.project.fields.user') }}
-                        </th>
+                        </th>-->
                         <th>
                             &nbsp;
                         </th>
@@ -51,13 +51,11 @@
                                 {{ $project->title ?? '' }}
                             </td>
                             <td>
-                                {{ $project->goal->title ?? '' }}
+                                {!! $project->description ?? '' !!}
                             </td>
-                            <td>
-                                @foreach($project->users as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
-                                @endforeach
-                            </td>
+                            <!--<td>
+                                <a href="/admin/goals/{{$project->goal->id}}">{{$project->goal->title}}</a>
+                            </td>-->
                             <td>
                                 @can('project_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.projects.show', $project->id) }}">
