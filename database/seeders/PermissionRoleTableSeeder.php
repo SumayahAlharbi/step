@@ -11,7 +11,7 @@ class PermissionRoleTableSeeder extends Seeder
     public function run()
     {
         $admin_permissions = Permission::all();
-        Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
+        Role::firstOrCreate(['title' => 'admin'])->permissions()->sync($admin_permissions->pluck('id'));
 
         $responsible_permissions =  Permission::where('title','=','profile_password_edit')->get();
 
@@ -35,7 +35,7 @@ class PermissionRoleTableSeeder extends Seeder
             && substr($permission->title, 0, 8) != 'profile_';
         });
 
-        Role::findOrFail(2)->permissions()->sync($responsible_permissions);
+        Role::firstOrCreate(['title' => 'responsible'])->permissions()->sync($responsible_permissions);
 
         $owner_permissions = $admin_permissions->filter(function ($permission) {
             return substr($permission->title, 0, 5) != 'user_'
@@ -58,7 +58,7 @@ class PermissionRoleTableSeeder extends Seeder
             && substr($permission->title, 0, 8) != 'profile_';
         });
 
-        Role::findOrFail(3)->permissions()->sync($owner_permissions);
+        Role::firstOrCreate(['title' => 'owner'])->permissions()->sync($owner_permissions);
 
     }
 }
