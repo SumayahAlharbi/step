@@ -56,6 +56,7 @@
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_description_helper') }}</span>
             </div>
             @endcan
+            @canany(['audit_log_access', 'initiative_edit'])
             <div class="form-group">
                 <label for="kpi_previous">{{ trans('cruds.initiative.fields.kpi_previous') }}</label>
                 <input class="form-control {{ $errors->has('kpi_previous') ? 'is-invalid' : '' }}" type="text" name="kpi_previous" id="kpi_previous" value="{{ old('kpi_previous', $initiative->kpi_previous) }}">
@@ -96,6 +97,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_current_date_helper') }}</span>
             </div>
+            @endcanany
             @can('audit_log_access')
             <div class="form-group">
                 <label for="kpi_target">{{ trans('cruds.initiative.fields.kpi_target') }}</label>
@@ -118,6 +120,7 @@
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_target_date_helper') }}</span>
             </div>
             @endcan
+            @canany(['audit_log_access', 'initiative_edit'])
             <div class="form-group">
                 <label>{{ trans('cruds.initiative.fields.status') }}</label>
                 <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
@@ -144,6 +147,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.why_if_not_accomplished_helper') }}</span>
             </div>
+            @endcanany
             @can('audit_log_access')
             <div class="form-group">
                 <label for="dod_comment">{{ trans('cruds.initiative.fields.dod_comment') }}</label>
