@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Auth;
 
 class InitiativesController extends Controller
 {
@@ -123,6 +124,8 @@ class InitiativesController extends Controller
 
     public function update(UpdateInitiativeRequest $request, Initiative $initiative)
     {
+       if (Auth::user()->can('audit_log_access')) // if the admin requested the update
+       {
         $initiative->update($request->all());
         $initiative->users()->sync($request->input('users', []));
 
@@ -141,8 +144,34 @@ class InitiativesController extends Controller
                 $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
             }
         }
+        return view('admin.initiatives.show', compact('initiative'));
+      }
 
-        return redirect()->route('admin.initiatives.index');
+      elseif (Auth::user()->can('initiative_edit')) { // if the responsible-role request the update
+        $input = $request->all();
+        if ($request->has('kpi_previous') OR $request->has('kpi_previous_date')
+            OR $request->has('kpi_current') OR $request->has('kpi_current_date')
+            OR $request->has('status') OR $request->has('why_if_not_accomplished')) {
+          $initiative->update($input);
+        }
+
+        if (count($initiative->attachments) > 0) {
+            foreach ($initiative->attachments as $media) {
+                if (!in_array($media->file_name, $request->input('attachments', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $initiative->attachments->pluck('file_name')->toArray();
+        foreach ($request->input('attachments', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
+            }
+        }
+
+        return view('admin.initiatives.show', compact('initiative'));
+      }
     }
 
     public function show(Initiative $initiative)

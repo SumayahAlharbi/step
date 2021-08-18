@@ -55,8 +55,30 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_description_helper') }}</span>
             </div>
+            @else
+            <div class="form-group">
+                <label class="required" for="title">{{ trans('cruds.initiative.fields.title') }}</label>
+                <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', $initiative->title) }}" readonly>
+                <span class="help-block">{{ trans('cruds.initiative.fields.title_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="description">{{ trans('cruds.initiative.fields.description') }}</label>
+                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description" value="{!! old('description', $initiative->description) !!}" readonly>
+                <span class="help-block">{{ trans('cruds.initiative.fields.description_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="project_id">{{ trans('cruds.initiative.fields.project') }}</label>
+                <input class="form-control {{ $errors->has('project') ? 'is-invalid' : '' }}" name="project_id" value="{{ $initiative->project->title }}" readonly>
+                <span class="help-block">{{ trans('cruds.initiative.fields.project_helper') }}</span>
+            </div>
+            <input type="hidden" name="project_id" id="project_id" value="{{$initiative->project->id}}">
+            <div class="form-group">
+                <label for="kpi_description">{{ trans('cruds.initiative.fields.kpi_description') }}</label>
+                <input class="form-control {{ $errors->has('kpi_description') ? 'is-invalid' : '' }}" name="kpi_description" id="kpi_description" value="{!! old('kpi_description', $initiative->kpi_description) !!}" readonly>
+                <span class="help-block">{{ trans('cruds.initiative.fields.kpi_description_helper') }}</span>
+            </div>
             @endcan
-            @canany(['audit_log_access', 'initiative_edit'])
+            @can('initiative_edit')
             <div class="form-group">
                 <label for="kpi_previous">{{ trans('cruds.initiative.fields.kpi_previous') }}</label>
                 <input class="form-control {{ $errors->has('kpi_previous') ? 'is-invalid' : '' }}" type="text" name="kpi_previous" id="kpi_previous" value="{{ old('kpi_previous', $initiative->kpi_previous) }}">
@@ -97,7 +119,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_current_date_helper') }}</span>
             </div>
-            @endcanany
+            @endcan
             @can('audit_log_access')
             <div class="form-group">
                 <label for="kpi_target">{{ trans('cruds.initiative.fields.kpi_target') }}</label>
@@ -119,13 +141,23 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.kpi_target_date_helper') }}</span>
             </div>
+            @else
+            <div class="form-group">
+                <label for="kpi_target">{{ trans('cruds.initiative.fields.kpi_target') }}</label>
+                <input class="form-control {{ $errors->has('kpi_target') ? 'is-invalid' : '' }}" type="text" name="kpi_target" id="kpi_target" value="{{ old('kpi_target', $initiative->kpi_target) }}" readonly>
+                <span class="help-block">{{ trans('cruds.initiative.fields.kpi_target_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="kpi_target_date">{{ trans('cruds.initiative.fields.kpi_target_date') }}</label>
+                <input class="form-control date {{ $errors->has('kpi_target_date') ? 'is-invalid' : '' }}" type="text" name="kpi_target_date" id="kpi_target_date" value="{{ old('kpi_target_date', $initiative->kpi_target_date) }}" readonly>
+                <span class="help-block">{{ trans('cruds.initiative.fields.kpi_target_date_helper') }}</span>
+            </div>
             @endcan
-            @canany(['audit_log_access', 'initiative_edit'])
+            @can('initiative_edit')
             <div class="form-group">
                 <label>{{ trans('cruds.initiative.fields.status') }}</label>
                 <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
                     <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    <option value="Ongoing">Ongoing</option>
                     @foreach(App\Models\Initiative::STATUS_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('status', $initiative->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
@@ -147,7 +179,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.initiative.fields.why_if_not_accomplished_helper') }}</span>
             </div>
-            @endcanany
+            @endcan
             @can('audit_log_access')
             <div class="form-group">
                 <label for="dod_comment">{{ trans('cruds.initiative.fields.dod_comment') }}</label>
@@ -157,6 +189,12 @@
                         {{ $errors->first('dod_comment') }}
                     </div>
                 @endif
+                <span class="help-block">{{ trans('cruds.initiative.fields.dod_comment_helper') }}</span>
+            </div>
+            @else
+            <div class="form-group">
+                <label for="dod_comment">{{ trans('cruds.initiative.fields.dod_comment') }}</label>
+                <input class="form-control {{ $errors->has('dod_comment') ? 'is-invalid' : '' }}" name="dod_comment" id="dod_comment" value="{!! old('dod_comment', $initiative->dod_comment) !!}" readonly>
                 <span class="help-block">{{ trans('cruds.initiative.fields.dod_comment_helper') }}</span>
             </div>
             @endcan

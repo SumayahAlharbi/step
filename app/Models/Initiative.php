@@ -34,6 +34,7 @@ class Initiative extends Model implements HasMedia
     const STATUS_SELECT = [
         'Accomplished'     => 'Accomplished',
         'Not Accomplished' => 'Not Accomplished',
+        'Ongoing' => 'Ongoing',
     ];
 
     protected $dates = [
