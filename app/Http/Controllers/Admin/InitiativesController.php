@@ -124,52 +124,64 @@ class InitiativesController extends Controller
 
     public function update(UpdateInitiativeRequest $request, Initiative $initiative)
     {
-       if (Auth::user()->can('audit_log_access')) // if the admin requested the update
-       {
+      if (auth()->user()->can('audit_log_access')) // admin update
+      {
         $initiative->update($request->all());
         $initiative->users()->sync($request->input('users', []));
 
         if (count($initiative->attachments) > 0) {
-            foreach ($initiative->attachments as $media) {
-                if (!in_array($media->file_name, $request->input('attachments', []))) {
-                    $media->delete();
-                }
+          foreach ($initiative->attachments as $media) {
+            if (!in_array($media->file_name, $request->input('attachments', []))) {
+              $media->delete();
             }
+          }
         }
 
         $media = $initiative->attachments->pluck('file_name')->toArray();
 
         foreach ($request->input('attachments', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
-            }
+          if (count($media) === 0 || !in_array($file, $media)) {
+            $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
+          }
         }
         return view('admin.initiatives.show', compact('initiative'));
       }
 
-      elseif (Auth::user()->can('initiative_edit')) { // if the responsible-role request the update
+      else if (auth()->user()->can('initiative_edit')) {
         $input = $request->all();
-        if ($request->has('kpi_previous') OR $request->has('kpi_previous_date')
-            OR $request->has('kpi_current') OR $request->has('kpi_current_date')
-            OR $request->has('status') OR $request->has('why_if_not_accomplished')) {
-          $initiative->update($input);
-        }
+        // unset non allowed fields
+        if (isset($input['title']))
+        unset($input['title']);
+        if (isset($input['description']))
+        unset($input['description']);
+        if (isset($input['project_id']))
+        unset($input['project_id']);
+        if (isset($input['kpi_description']))
+        unset($input['kpi_description']);
+        if (isset($input['kpi_target']))
+        unset($input['kpi_target']);
+        if (isset($input['kpi_target_date']))
+        unset($input['kpi_target_date']);
+        if (isset($input['dod_comment']))
+        unset($input['dod_comment']);
+
+        $initiative->update($input);
 
         if (count($initiative->attachments) > 0) {
-            foreach ($initiative->attachments as $media) {
-                if (!in_array($media->file_name, $request->input('attachments', []))) {
-                    $media->delete();
-                }
+          foreach ($initiative->attachments as $media) {
+            if (!in_array($media->file_name, $request->input('attachments', []))) {
+              $media->delete();
             }
+          }
         }
 
         $media = $initiative->attachments->pluck('file_name')->toArray();
         foreach ($request->input('attachments', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
-            }
+          if (count($media) === 0 || !in_array($file, $media)) {
+            $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
+          }
         }
-
+        
         return view('admin.initiatives.show', compact('initiative'));
       }
     }
