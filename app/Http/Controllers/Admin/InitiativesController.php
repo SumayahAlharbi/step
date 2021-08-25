@@ -68,7 +68,7 @@ class InitiativesController extends Controller
                 $labels = [];
 
                 foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->name);
+                    $labels[] = sprintf('<span class="badge badge-primary">%s</span>', $user->name);
                 }
 
                 return implode(' ', $labels);
@@ -181,7 +181,7 @@ class InitiativesController extends Controller
             $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
           }
         }
-        
+
         return view('admin.initiatives.show', compact('initiative'));
       }
     }
