@@ -68,7 +68,7 @@ class InitiativesController extends Controller
                 $labels = [];
 
                 foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="badge badge-primary">%s</span>', $user->name);
+                    $labels[] = sprintf('<span class="badge badge-info">%s</span>', $user->name);
                 }
 
                 return implode(' ', $labels);
