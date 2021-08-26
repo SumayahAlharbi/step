@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Auth;
 
 class InitiativesController extends Controller
 {
@@ -67,7 +68,7 @@ class InitiativesController extends Controller
                 $labels = [];
 
                 foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->name);
+                    $labels[] = sprintf('<span class="badge badge-info">%s</span>', $user->name);
                 }
 
                 return implode(' ', $labels);
@@ -123,26 +124,66 @@ class InitiativesController extends Controller
 
     public function update(UpdateInitiativeRequest $request, Initiative $initiative)
     {
+      if (auth()->user()->can('audit_log_access')) // admin update
+      {
         $initiative->update($request->all());
         $initiative->users()->sync($request->input('users', []));
 
         if (count($initiative->attachments) > 0) {
-            foreach ($initiative->attachments as $media) {
-                if (!in_array($media->file_name, $request->input('attachments', []))) {
-                    $media->delete();
-                }
+          foreach ($initiative->attachments as $media) {
+            if (!in_array($media->file_name, $request->input('attachments', []))) {
+              $media->delete();
             }
+          }
         }
 
         $media = $initiative->attachments->pluck('file_name')->toArray();
 
         foreach ($request->input('attachments', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
+          if (count($media) === 0 || !in_array($file, $media)) {
+            $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
+          }
+        }
+        return view('admin.initiatives.show', compact('initiative'));
+      }
+
+      else if (auth()->user()->can('initiative_edit')) {
+        $input = $request->all();
+        // unset non allowed fields
+        if (isset($input['title']))
+        unset($input['title']);
+        if (isset($input['description']))
+        unset($input['description']);
+        if (isset($input['project_id']))
+        unset($input['project_id']);
+        if (isset($input['kpi_description']))
+        unset($input['kpi_description']);
+        if (isset($input['kpi_target']))
+        unset($input['kpi_target']);
+        if (isset($input['kpi_target_date']))
+        unset($input['kpi_target_date']);
+        if (isset($input['dod_comment']))
+        unset($input['dod_comment']);
+
+        $initiative->update($input);
+
+        if (count($initiative->attachments) > 0) {
+          foreach ($initiative->attachments as $media) {
+            if (!in_array($media->file_name, $request->input('attachments', []))) {
+              $media->delete();
             }
+          }
         }
 
-        return redirect()->route('admin.initiatives.index');
+        $media = $initiative->attachments->pluck('file_name')->toArray();
+        foreach ($request->input('attachments', []) as $file) {
+          if (count($media) === 0 || !in_array($file, $media)) {
+            $initiative->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachments');
+          }
+        }
+
+        return view('admin.initiatives.show', compact('initiative'));
+      }
     }
 
     public function show(Initiative $initiative)

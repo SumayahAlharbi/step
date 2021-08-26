@@ -154,7 +154,7 @@
                         </th>
                         <td>
                             @foreach($initiative->users as $key => $user)
-                                <span class="label label-info">{{ $user->name }}</span>
+                                <span class="badge badge-info">{{ $user->name }}</span>
                             @endforeach
                         </td>
                     </tr>
