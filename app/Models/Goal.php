@@ -16,7 +16,7 @@ use \LaravelArchivable\Archivable;
 
 class Goal extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, Auditable, HasFactory, Archivable,UserGoalsTrait;
+    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, Auditable, HasFactory, Archivable, UserGoalsTrait;
 
     public $table = 'goals';
 
