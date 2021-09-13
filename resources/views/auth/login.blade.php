@@ -4,8 +4,12 @@
     <div class="col-md-6">
         <div class="card mx-4">
             <div class="card-body p-4">
-                <h1>{{ trans('panel.site_title') }}</h1>
-
+                <!-- <h1>{{ trans('panel.site_title') }}</h1> -->
+                <img src="{{ asset('/assets/images/STEP_logo.png') }}" 
+                style="width:256px;height:138px;
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;">
                 <p class="text-muted">{{ trans('global.login') }}</p>
 
                 @if(session('message'))
