@@ -60,16 +60,6 @@
                             </a>
                         </li>
                     @endcan
-                    @can('team_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-users c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.team.title') }}
-                            </a>
-                        </li>
-                    @endcan
                     @can('audit_log_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.audit-logs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "c-active" : "" }}">

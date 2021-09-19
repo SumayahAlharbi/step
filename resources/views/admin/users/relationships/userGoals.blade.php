@@ -34,9 +34,6 @@
                             {{ trans('cruds.goal.fields.strategic_plan') }}
                         </th>
                         <th>
-                            {{ trans('cruds.goal.fields.team') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -60,9 +57,6 @@
                             </td>
                             <td>
                                 {{ $goal->strategic_plan->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $goal->team->name ?? '' }}
                             </td>
                             <td>
                                 @can('goal_show')
@@ -140,7 +134,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

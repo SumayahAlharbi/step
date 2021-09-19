@@ -27,7 +27,7 @@ class InitiativesController extends Controller
         abort_if(Gate::denies('initiative_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Initiative::with(['project', 'users', 'team'])->select(sprintf('%s.*', (new Initiative)->table));
+            $query = Initiative::with(['project', 'users'])->select(sprintf('%s.*', (new Initiative)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -117,7 +117,7 @@ class InitiativesController extends Controller
 
         $users = User::all()->pluck('name', 'id');
 
-        $initiative->load('project', 'users', 'team');
+        $initiative->load('project', 'users');
 
         return view('admin.initiatives.edit', compact('projects', 'users', 'initiative'));
     }
@@ -190,7 +190,7 @@ class InitiativesController extends Controller
     {
         abort_if(Gate::denies('initiative_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $initiative->load('project', 'users', 'team', 'initiativeActionPlans', 'initiativeRisks');
+        $initiative->load('project', 'users', 'initiativeActionPlans', 'initiativeRisks');
 
         return view('admin.initiatives.show', compact('initiative'));
     }

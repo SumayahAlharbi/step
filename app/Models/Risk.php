@@ -49,7 +49,6 @@ class Risk extends Model implements HasMedia
         'initiative_id',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -68,8 +67,4 @@ class Risk extends Model implements HasMedia
         return $this->belongsTo(Initiative::class, 'initiative_id');
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
 }

@@ -38,7 +38,6 @@ class Goal extends Model implements HasMedia
         'strategic_plan_id',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -65,10 +64,5 @@ class Goal extends Model implements HasMedia
     public function strategic_plan()
     {
         return $this->belongsTo(StrategicPlan::class, 'strategic_plan_id');
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 }
