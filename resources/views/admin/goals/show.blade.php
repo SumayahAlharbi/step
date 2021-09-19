@@ -73,14 +73,6 @@
                             {{ $goal->updated_at }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.goal.fields.team') }}
-                        </th>
-                        <td>
-                            {{ $goal->team->name ?? '' }}
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

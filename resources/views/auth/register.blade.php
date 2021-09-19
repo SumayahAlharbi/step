@@ -9,9 +9,6 @@
 
                 <form method="POST" action="{{ route('register') }}">
                     {{ csrf_field() }}
-                    @if(request()->has('team'))
-                        <input type="hidden" name="team" id="team" value="{{ request()->query('team') }}">
-                    @endif
                     <h1>{{ trans('panel.site_title') }}</h1>
                     <p class="text-muted">{{ trans('global.register') }}</p>
 
