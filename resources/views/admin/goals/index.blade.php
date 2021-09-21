@@ -38,9 +38,6 @@
                         {{ trans('cruds.goal.fields.strategic_plan') }}
                     </th>
                     <th>
-                        {{ trans('cruds.goal.fields.team') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -100,7 +97,6 @@
 { data: 'title', name: 'title' },
 { data: 'description', name: 'description'},
 { data: 'strategic_plan_name', name: 'strategic_plan.name' },
-{ data: 'team_name', name: 'team.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

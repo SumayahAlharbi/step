@@ -64,7 +64,6 @@ class Initiative extends Model implements HasMedia
         'dod_comment',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -133,8 +132,4 @@ class Initiative extends Model implements HasMedia
         return $this->belongsToMany(User::class);
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
 }

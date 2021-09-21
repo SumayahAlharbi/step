@@ -26,7 +26,7 @@ class ActionPlansController extends Controller
         abort_if(Gate::denies('action_plan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ActionPlan::with(['initiative', 'users', 'team'])->select(sprintf('%s.*', (new ActionPlan)->table));
+            $query = ActionPlan::with(['initiative', 'users'])->select(sprintf('%s.*', (new ActionPlan)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -113,7 +113,7 @@ class ActionPlansController extends Controller
 
         $users = User::all()->pluck('name', 'id');
 
-        $actionPlan->load('initiative', 'users', 'team');
+        $actionPlan->load('initiative', 'users');
 
         return view('admin.actionPlans.edit', compact('initiatives', 'users', 'actionPlan'));
     }
@@ -146,7 +146,7 @@ class ActionPlansController extends Controller
     {
         abort_if(Gate::denies('action_plan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $actionPlan->load('initiative', 'users', 'team');
+        $actionPlan->load('initiative', 'users');
 
         return view('admin.actionPlans.show', compact('actionPlan'));
     }

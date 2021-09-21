@@ -29,7 +29,7 @@ class StrategicPlansController extends Controller
         abort_if(Gate::denies('strategic_plan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = StrategicPlan::with(['team'])->select(sprintf('%s.*', (new StrategicPlan)->table));
+            $query = StrategicPlan::select(sprintf('%s.*', (new StrategicPlan)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -128,8 +128,6 @@ class StrategicPlansController extends Controller
     {
         abort_if(Gate::denies('strategic_plan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $strategicPlan->load('team');
-
         return view('admin.strategicPlans.edit', compact('strategicPlan'));
     }
 
@@ -144,7 +142,7 @@ class StrategicPlansController extends Controller
     {
         abort_if(Gate::denies('strategic_plan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $strategicPlan->load('team', 'strategicPlanGoals');
+        $strategicPlan->load('strategicPlanGoals');
 
         return view('admin.strategicPlans.show', compact('strategicPlan'));
     }
@@ -268,6 +266,7 @@ class StrategicPlansController extends Controller
       }
 
       $strategicPlan->unarchive();
-      return back();
+      return view('admin.strategicPlans.index');
+
     }
 }

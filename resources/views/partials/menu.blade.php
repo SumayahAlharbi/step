@@ -1,8 +1,9 @@
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
 
     <div class="c-sidebar-brand d-md-down-none">
-        <a class="c-sidebar-brand-full h4" href="#">
-            {{ trans('panel.site_title') }}
+        <a class="c-sidebar-brand-full h4" href="/admin">
+        <img src="{{ asset('/assets/images/STEP_logo.png') }}" style="width:256px;height:138px;">
+            <!-- {{ trans('panel.site_title') }} -->
         </a>
     </div>
 
@@ -56,16 +57,6 @@
 
                                 </i>
                                 {{ trans('cruds.user.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('team_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.teams.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/teams") || request()->is("admin/teams/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-users c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.team.title') }}
                             </a>
                         </li>
                     @endcan
