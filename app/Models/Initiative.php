@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
+use App\Traits\UserInitiativeTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use \LaravelArchivable\Archivable;
 
 class Initiative extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, Auditable, HasFactory, Archivable;
+    use SoftDeletes, MultiTenantModelTrait, InteractsWithMedia, Auditable, HasFactory, Archivable, UserInitiativeTrait;
 
     public $table = 'initiatives';
 
@@ -34,6 +35,7 @@ class Initiative extends Model implements HasMedia
     const STATUS_SELECT = [
         'Accomplished'     => 'Accomplished',
         'Not Accomplished' => 'Not Accomplished',
+        'Ongoing' => 'Ongoing',
     ];
 
     protected $dates = [
@@ -62,7 +64,6 @@ class Initiative extends Model implements HasMedia
         'dod_comment',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -131,8 +132,4 @@ class Initiative extends Model implements HasMedia
         return $this->belongsToMany(User::class);
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
 }

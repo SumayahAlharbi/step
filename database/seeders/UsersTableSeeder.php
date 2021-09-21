@@ -11,19 +11,13 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        $users = [
-            [
-                'id'             => 1,
-                'name'           => 'Admin',
-                'email'          => 'admin@admin.com',
-                'password'       => bcrypt('password'),
-                'remember_token' => null,
-            ],
-        ];
+        // find or create the admin user
+        User::firstOrCreate(['email' => 'admin@admin.com'],['name' => 'Admin','password' => bcrypt('password'),'remember_token' => null]);
+
         if (App::environment('production')) {
         DB::unprepared('SET IDENTITY_INSERT users ON');
         }
-        User::insert($users);
+        //User::insert($users);
         if (App::environment('production')) {
         DB::unprepared('SET IDENTITY_INSERT users OFF');
         }

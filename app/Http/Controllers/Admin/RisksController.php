@@ -25,7 +25,7 @@ class RisksController extends Controller
         abort_if(Gate::denies('risk_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Risk::with(['initiative', 'team'])->select(sprintf('%s.*', (new Risk)->table));
+            $query = Risk::with(['initiative'])->select(sprintf('%s.*', (new Risk)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -102,7 +102,7 @@ class RisksController extends Controller
 
         $initiatives = Initiative::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $risk->load('initiative', 'team');
+        $risk->load('initiative');
 
         return view('admin.risks.edit', compact('initiatives', 'risk'));
     }
@@ -118,7 +118,7 @@ class RisksController extends Controller
     {
         abort_if(Gate::denies('risk_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $risk->load('initiative', 'team');
+        $risk->load('initiative');
 
         return view('admin.risks.show', compact('risk'));
     }

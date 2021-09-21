@@ -10,7 +10,7 @@ use App\Http\Requests\StoreGoalRequest;
 use App\Http\Requests\UpdateGoalRequest;
 use App\Models\Goal;
 use App\Models\StrategicPlan;
-use App\Models\Team;
+//use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class GoalsController extends Controller
         abort_if(Gate::denies('goal_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Goal::with(['users', 'strategic_plan', 'team'])->select(sprintf('%s.*', (new Goal)->table));
+            $query = Goal::with(['users', 'strategic_plan'])->select(sprintf('%s.*', (new Goal)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -61,11 +61,11 @@ class GoalsController extends Controller
                 return $row->strategic_plan ? $row->strategic_plan->name : '';
             });
 
-            $table->addColumn('team_name', function ($row) {
+            /*$table->addColumn('team_name', function ($row) {
                 return $row->team ? $row->team->name : '';
-            });
+            });*/
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'strategic_plan', 'team']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'strategic_plan']);
 
             return $table->make(true);
         }
@@ -81,9 +81,7 @@ class GoalsController extends Controller
 
         $strategic_plans = StrategicPlan::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.goals.create', compact('users', 'strategic_plans', 'teams'));
+        return view('admin.goals.create', compact('users', 'strategic_plans'));
     }
 
     public function store(StoreGoalRequest $request)
@@ -106,11 +104,11 @@ class GoalsController extends Controller
 
         $strategic_plans = StrategicPlan::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //$teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $goal->load('users', 'strategic_plan', 'team');
+        $goal->load('users', 'strategic_plan');
 
-        return view('admin.goals.edit', compact('users', 'strategic_plans', 'teams', 'goal'));
+        return view('admin.goals.edit', compact('users', 'strategic_plans', 'goal'));
     }
 
     public function update(UpdateGoalRequest $request, Goal $goal)
@@ -125,7 +123,7 @@ class GoalsController extends Controller
     {
         abort_if(Gate::denies('goal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $goal->load('users', 'strategic_plan', 'team', 'goalProjects');
+        $goal->load('users', 'strategic_plan', 'goalProjects');
 
         return view('admin.goals.show', compact('goal'));
     }

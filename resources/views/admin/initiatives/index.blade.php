@@ -32,6 +32,9 @@
                         {{ trans('cruds.initiative.fields.title') }}
                     </th>
                     <th>
+                        {{ trans('cruds.initiative.fields.description') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.initiative.fields.project') }}
                     </th>
                     <th>
@@ -101,7 +104,12 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'title', name: 'title' },
-{ data: 'project_title', name: 'project.title' },
+{ data: 'description', name: 'description'},
+{ data: 'project', name: 'project_id' ,
+render: function ( data, type, row) {
+      return '<a href="/admin/projects/'+data.id+'">'+data.title+'</a>';
+    }
+},
 { data: 'status', name: 'status' },
 { data: 'user', name: 'users.name' },
 { data: 'updated_at', name: 'updated_at' },

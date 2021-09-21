@@ -28,7 +28,7 @@
                             {{ trans('cruds.goal.fields.title') }}
                         </th>
                         <th>
-                            {{ trans('cruds.goal.fields.user') }}
+                            {{ trans('cruds.goal.fields.description') }}
                         </th>
                         <th>
                             {{ trans('cruds.goal.fields.strategic_plan') }}
@@ -54,9 +54,7 @@
                                 {{ $goal->title ?? '' }}
                             </td>
                             <td>
-                                @foreach($goal->users as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
-                                @endforeach
+                                {!! $goal->description ?? '' !!}
                             </td>
                             <td>
                                 {{ $goal->strategic_plan->name ?? '' }}

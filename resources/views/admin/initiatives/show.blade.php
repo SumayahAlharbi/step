@@ -147,16 +147,18 @@
                             @endforeach
                         </td>
                     </tr>
+                    @can('audit_log_access')
                     <tr>
                         <th>
                             {{ trans('cruds.initiative.fields.user') }}
                         </th>
                         <td>
                             @foreach($initiative->users as $key => $user)
-                                <span class="label label-info">{{ $user->name }}</span>
+                                <span class="badge badge-info">{{ $user->name }}</span>
                             @endforeach
                         </td>
                     </tr>
+                    @endcan
                     <tr>
                         <th>
                             {{ trans('cruds.initiative.fields.updated_at') }}

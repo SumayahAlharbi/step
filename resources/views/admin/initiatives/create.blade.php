@@ -121,6 +121,7 @@
                 <label>{{ trans('cruds.initiative.fields.status') }}</label>
                 <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
                     <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    <option value="Ongoing">Ongoing</option>
                     @foreach(App\Models\Initiative::STATUS_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('status', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach

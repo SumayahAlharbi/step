@@ -26,7 +26,7 @@ class ProjectsController extends Controller
         abort_if(Gate::denies('project_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Project::with(['goal', 'users', 'team'])->select(sprintf('%s.*', (new Project)->table));
+            $query = Project::with('goal')->select(sprintf('%s.*', (new Project)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -53,21 +53,14 @@ class ProjectsController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
-            $table->addColumn('goal_title', function ($row) {
-                return $row->goal ? $row->goal->title : '';
+            $table->addColumn('description', function ($row) {
+                return strip_tags(htmlspecialchars_decode($row->description));
+            });
+            $table->addColumn('goal_id', function ($row) {
+                return $row->goal ? $row->goal->id : '';
             });
 
-            $table->editColumn('user', function ($row) {
-                $labels = [];
-
-                foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'goal', 'user']);
+            $table->rawColumns(['actions', 'placeholder', 'goal']);
 
             return $table->make(true);
         }
@@ -106,7 +99,7 @@ class ProjectsController extends Controller
 
         $users = User::all()->pluck('name', 'id');
 
-        $project->load('goal', 'users', 'team');
+        $project->load('goal', 'users');
 
         return view('admin.projects.edit', compact('goals', 'users', 'project'));
     }
@@ -123,7 +116,7 @@ class ProjectsController extends Controller
     {
         abort_if(Gate::denies('project_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $project->load('goal', 'users', 'team', 'projectInitiatives');
+        $project->load('goal', 'users','projectInitiatives');
 
         return view('admin.projects.show', compact('project'));
     }
